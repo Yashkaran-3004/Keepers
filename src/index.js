@@ -7,6 +7,20 @@ import env from "dotenv";
 env.config();
 
 const app = express();
+
+const allowedOrigins = ['https://keepers-note.netlify.app'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 const port = process.env.PORT || 3000;
 let user = 1;
 const saltRound = 10;
@@ -24,18 +38,7 @@ const db  = new pg.Client({
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static("public"));
   app.use(bodyParser.json());
-  const allowedOrigins = ['https://keepers-note.netlify.app/'];
-  app.use(cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  }));
+  
 
   async function getItems() {
     try{
