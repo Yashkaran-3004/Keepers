@@ -56,26 +56,26 @@ function Notes(){
 useEffect(() => {
     // Ensure `user` and `user.data` exist and contain the necessary data
     if (!user?.data || user.data.length === 0) {
-      console.log("No user data available or user data is empty.");
+      //console.log("No user data available or user data is empty.");
       return;
     }
 
     const userId = user.data[0].users_id;
     if (!userId) {
-      console.log("User ID not available.");
+      //console.log("User ID not available.");
       return;
     }
 
     const fetchItems = async () => {
       try {
         //console.log("Fetching items for user:", userId);
-        const response = await axios.get(`http://localhost:3000/items?user=${userId}`);
+        const response = await axios.get(`https://keepers-zmu2.onrender.com/items?user=${userId}`);
         //console.log("Fetched response data:", response.data.data);
 
         if (Array.isArray(response.data.data)) {
           setNotes(response.data.data);  
         } else {
-          console.error("Fetched data is not an array:", response.data.data);
+          //console.error("Fetched data is not an array:", response.data.data);
         }
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -87,7 +87,7 @@ useEffect(() => {
 
   async function addNote(newNote) {
     try {
-      const response = await axios.post("http://localhost:3000/add", {
+      const response = await axios.post("https://keepers-zmu2.onrender.com/add", {
         user_data: newNote,
         id: user.data[0].users_id
       });
@@ -96,7 +96,7 @@ useEffect(() => {
       if (Array.isArray(response.data.data)) {
         setNotes(response.data.data);  // Assuming the API returns the updated list of notes
       } else {
-        console.error("API response is not an array:", response.data.data);
+        //console.error("API response is not an array:", response.data.data);
       }
     } catch (err) {
       console.log("Error in response after add request", err);
@@ -107,7 +107,7 @@ useEffect(() => {
    async function deleteNote(id) {
 
     try{
-        const response = await axios.post("http://localhost:3000/delete", { deleteNoteId: id });
+        const response = await axios.post("https://keepers-zmu2.onrender.com/delete", { deleteNoteId: id });
         setNotes(response.data.data);
     } catch(err){
         console.log("error while deleting",err);

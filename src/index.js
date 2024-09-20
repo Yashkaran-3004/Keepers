@@ -24,7 +24,7 @@ const db  = new pg.Client({
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static("public"));
   app.use(bodyParser.json());
-  const allowedOrigins = ['https://todo-master1.netlify.app/'];
+  const allowedOrigins = ['https://keepers-note.netlify.app/'];
   app.use(cors({
     origin: function(origin, callback) {
       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
