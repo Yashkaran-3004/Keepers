@@ -26,13 +26,15 @@ const db  = new pg.Client({
   app.use(bodyParser.json());
   const allowedOrigins = ['https://keepers-note.netlify.app/'];
   app.use(cors({
-    origin: function(origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
-    }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
   async function getItems() {
