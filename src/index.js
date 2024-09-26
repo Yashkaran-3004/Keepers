@@ -109,7 +109,15 @@ try{
         if(result){
              users_data = await getItems();
              //console.log("users_data after getting login getItems:",users_data);
-        res.json({ data: users_data});
+             if (users_data.length == 0)
+             {
+              res.json( {data: [{user_id:user}]});
+             }
+         else
+         {
+          res.json({ data: users_data});
+         }    
+        
         }
         else{
             res.status(401).json({message: "Wrong Password try again!"});

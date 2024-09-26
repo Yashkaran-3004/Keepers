@@ -27,7 +27,7 @@ function Register(){
         event.preventDefault();
         try{
         const response = await axios.post("https://keepers-zmu2.onrender.com/register",user);
-        //console.log("recieved data after regisitration: ",response.data);
+        console.log("recieved data after regisitration: ",response.data);
 
         navigate("/notes", { state: { user: response.data } });
 

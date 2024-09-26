@@ -26,7 +26,7 @@ function Login(){
         event.preventDefault();
         try{
         const response = await axios.post("https://keepers-zmu2.onrender.com/login",user);
-        //console.log("recieved data after login: ",response.data);
+        console.log("recieved data after login: ",response.data);
 
         navigate("/notes", { state: { user: response.data } });
 
